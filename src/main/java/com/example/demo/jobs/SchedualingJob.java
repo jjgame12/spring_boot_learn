@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-//@Component
+@Component
 public class SchedualingJob {
     @Scheduled(fixedDelay = 1000)
     public void fixedJob1() {
