@@ -6,13 +6,17 @@ import com.example.demo.model.Jobs;
 import com.example.demo.model.User;
 import com.example.demo.service.BeanService;
 import com.example.demo.service.GlobalService;
+import com.example.demo.service.ZipFileService;
+import com.example.demo.service.ZipFileServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author jj
@@ -31,6 +35,9 @@ public class HelloWorldController {
 
     @Autowired
     private JobsMapper jobsMapper;
+
+    @Autowired
+    private ZipFileService fileService;
 
     @RequestMapping("/hello")
     public String index() {
@@ -66,6 +73,17 @@ public class HelloWorldController {
     @GetMapping("/getJob/{id}")
     public Jobs getJob(@PathVariable("id") Long id) {
         return jobsMapper.selectByPrimaryKey(id);
+    }
+
+    @GetMapping("/download/{fileName}")
+    public void downloadGet(@PathVariable("fileName") String fileName, HttpServletRequest request, HttpServletResponse response) {
+        download(fileName, request, response);
+    }
+
+    @PostMapping("/download/{fileName}")
+    public void download(@PathVariable("fileName") String fileName, HttpServletRequest request, HttpServletResponse response) {
+        boolean successful = fileService.download(fileName, response);
+        log.info("文件下载结果[{}]", successful);
     }
 }
 

@@ -1,7 +1,7 @@
 server:
   port: 8083
 localData:
-  name: jj
+  name: wawa
 
 # mybatis
 mybatis:
