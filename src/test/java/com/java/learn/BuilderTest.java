@@ -30,6 +30,10 @@ class Wawa {
         id = builder.id;
     }
 
+    public Wawa() {
+
+    }
+
     public static void print() {
         System.out.println("print");
     }

@@ -12,4 +12,21 @@ public class ExceptionTest {
 //        e.initCause(new IOException());
         System.out.println(e.getCause());
     }
+
+    @Test
+    public void testTryException() {
+        try {
+            testTry();
+        } catch (Exception e) {
+            System.out.println("catch exception");
+        }
+    }
+
+    public void testTry() throws Exception {
+        try {
+            throw new Exception();
+        } finally {
+            System.out.println("finally1...");
+        }
+    }
 }
